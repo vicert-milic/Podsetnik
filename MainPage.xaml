@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*" Padding="16">
         <Button Text="+ Dodaj podsetnik"
                 Grid.Row="0"
-                BackgroundColor="#512BD4"
+                BackgroundColor="#2E7D32"
                 TextColor="White"
                 FontSize="18"
                 Margin="0,0,0,12"
@@ -15,8 +15,20 @@
 
         <CollectionView x:Name="ItemsList"
                         Grid.Row="1"
+                        IsGrouped="True"
                         SelectionMode="None"
                         EmptyView="Nema podsetnika. Dodajte prvi!">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="8,12,8,4">
+                        <Label Text="{Binding Name}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#2E7D32" />
+                        <BoxView HeightRequest="2" Color="#2E7D32" Margin="0,4,0,0" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <SwipeView>
@@ -28,7 +40,7 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <Frame Margin="0,4" Padding="12" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="True">
-                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
                                 <Label Text="{Binding Description}"
                                        FontSize="17"
                                        FontAttributes="Bold"
@@ -43,9 +55,14 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                <CheckBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       FontSize="12"
+                                       TextColor="#999999"
+                                       Text="{Binding Category, StringFormat='Kategorija: {0}'}" />
+                                <CheckBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
                                           IsChecked="{Binding IsCompleted}"
                                           CheckedChanged="OnCheckedChanged"
+                                          Color="#2E7D32"
                                           VerticalOptions="Center" />
                             </Grid>
                         </Frame>

@@ -9,7 +9,12 @@
       "Bash(dotnet publish:*)",
       "Bash(gh repo:*)",
       "Bash(gh auth:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(start:*)",
+      "Read(//c/ProgramData/Microsoft/VisualStudio/**)",
+      "Bash(where.exe devenv.exe)",
+      "Bash(cmd.exe /c 'where devenv')"
     ]
   }
 }

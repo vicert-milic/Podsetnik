@@ -6,4 +6,5 @@ public class PlanItem
     public string Description { get; set; } = string.Empty;
     public DateTime AlarmTime { get; set; }
     public bool IsCompleted { get; set; }
+    public string Category { get; set; } = "Ostalo";
 }

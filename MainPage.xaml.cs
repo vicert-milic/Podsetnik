@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
     private void RefreshList()
     {
         ItemsList.ItemsSource = null;
-        ItemsList.ItemsSource = _service.GetAll();
+        ItemsList.ItemsSource = _service.GetGrouped();
     }
 
     private async void OnAddClicked(object? sender, EventArgs e)

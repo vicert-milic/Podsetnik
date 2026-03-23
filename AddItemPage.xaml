@@ -12,15 +12,31 @@
                     HeightRequest="120"
                     FontSize="16" />
 
+            <Label Text="Kategorija" FontSize="16" FontAttributes="Bold" />
+            <Picker x:Name="CategoryPicker" FontSize="16" Title="Izaberite kategoriju" />
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry x:Name="NewCategoryEntry"
+                       Placeholder="Nova kategorija..."
+                       FontSize="16"
+                       Grid.Column="0" />
+                <Button Text="+"
+                        BackgroundColor="#2E7D32"
+                        TextColor="White"
+                        FontSize="18"
+                        WidthRequest="50"
+                        Grid.Column="1"
+                        Clicked="OnAddCategoryClicked" />
+            </Grid>
+
             <Label Text="Datum" FontSize="16" FontAttributes="Bold" />
-            <DatePicker x:Name="AlarmDate"
-                        FontSize="16" />
+            <DatePicker x:Name="AlarmDate" FontSize="16" />
 
             <Label Text="Vreme" FontSize="16" FontAttributes="Bold" />
             <TimePicker x:Name="AlarmTime" FontSize="16" />
 
             <Button Text="Sačuvaj"
-                    BackgroundColor="#512BD4"
+                    BackgroundColor="#2E7D32"
                     TextColor="White"
                     FontSize="18"
                     Margin="0,20,0,0"

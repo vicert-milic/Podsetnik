@@ -15,27 +15,43 @@ public class AlarmReceiver : BroadcastReceiver
         var id = intent.GetIntExtra("id", 0);
         var description = intent.GetStringExtra("description") ?? "Podsetnik";
 
-        CreateNotificationChannel(context);
+        // Launch full-screen alarm activity with sound
+        var alarmIntent = new Intent(context, typeof(AlarmActivity));
+        alarmIntent.PutExtra("id", id);
+        alarmIntent.PutExtra("description", description);
+        alarmIntent.SetFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
 
-        var notificationIntent = new Intent(context, typeof(MainActivity));
-        notificationIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop);
-        var pendingIntent = PendingIntent.GetActivity(
-            context, id, notificationIntent,
+        var fullScreenPendingIntent = PendingIntent.GetActivity(
+            context, id, alarmIntent,
             PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
 
-        var notification = new NotificationCompat.Builder(context, "podsetnik_channel")
+        CreateNotificationChannel(context);
+
+        // Also show notification with full-screen intent (for when screen is locked)
+        var notification = new NotificationCompat.Builder(context, "podsetnik_alarm_channel")
             .SetSmallIcon(global::Android.Resource.Drawable.IcDialogInfo)
-            .SetContentTitle("Podsetnik")
+            .SetContentTitle("Podsetnik - ALARM")
             .SetContentText(description)
             .SetStyle(new NotificationCompat.BigTextStyle().BigText(description))
-            .SetPriority(NotificationCompat.PriorityHigh)
-            .SetDefaults((int)NotificationDefaults.All)
+            .SetPriority(NotificationCompat.PriorityMax)
+            .SetCategory(NotificationCompat.CategoryAlarm)
+            .SetFullScreenIntent(fullScreenPendingIntent, true)
             .SetAutoCancel(true)
-            .SetContentIntent(pendingIntent)
+            .SetOngoing(true)
             .Build();
 
         var notificationManager = NotificationManagerCompat.From(context);
         notificationManager.Notify(id, notification);
+
+        // Also try to start the alarm activity directly
+        try
+        {
+            context.StartActivity(alarmIntent);
+        }
+        catch
+        {
+            // If can't start activity directly, full-screen intent on notification will handle it
+        }
     }
 
     private void CreateNotificationChannel(Context context)
@@ -43,14 +59,16 @@ public class AlarmReceiver : BroadcastReceiver
         if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
         {
             var channel = new NotificationChannel(
-                "podsetnik_channel",
-                "Podsetnici",
-                NotificationImportance.High)
+                "podsetnik_alarm_channel",
+                "Alarm podsetnika",
+                NotificationImportance.Max)
             {
-                Description = "Obaveštenja za podsetnike"
+                Description = "Alarm zvuk za podsetnike"
             };
             channel.EnableVibration(true);
             channel.EnableLights(true);
+            channel.SetBypassDnd(true);
+            channel.LockscreenVisibility = NotificationVisibility.Public;
 
             var manager = (NotificationManager?)context.GetSystemService(Context.NotificationService);
             manager?.CreateNotificationChannel(channel);
