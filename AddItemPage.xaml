@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Podsetnik.AddItemPage"
+             Title="Novi podsetnik">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+            <Label Text="Opis" FontSize="16" FontAttributes="Bold" />
+            <Editor x:Name="DescriptionEditor"
+                    Placeholder="Unesite opis podsetnika..."
+                    HeightRequest="120"
+                    FontSize="16" />
+
+            <Label Text="Datum" FontSize="16" FontAttributes="Bold" />
+            <DatePicker x:Name="AlarmDate"
+                        FontSize="16" />
+
+            <Label Text="Vreme" FontSize="16" FontAttributes="Bold" />
+            <TimePicker x:Name="AlarmTime" FontSize="16" />
+
+            <Button Text="Sačuvaj"
+                    BackgroundColor="#512BD4"
+                    TextColor="White"
+                    FontSize="18"
+                    Margin="0,20,0,0"
+                    Clicked="OnSaveClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

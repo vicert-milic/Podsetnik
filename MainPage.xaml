@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Podsetnik.MainPage"
+             Title="Podsetnik">
+
+    <Grid RowDefinitions="Auto,*" Padding="16">
+        <Button Text="+ Dodaj podsetnik"
+                Grid.Row="0"
+                BackgroundColor="#512BD4"
+                TextColor="White"
+                FontSize="18"
+                Margin="0,0,0,12"
+                Clicked="OnAddClicked" />
+
+        <CollectionView x:Name="ItemsList"
+                        Grid.Row="1"
+                        SelectionMode="None"
+                        EmptyView="Nema podsetnika. Dodajte prvi!">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Obriši"
+                                           BackgroundColor="Red"
+                                           Invoked="OnDeleteSwiped" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame Margin="0,4" Padding="12" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="True">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Label Text="{Binding Description}"
+                                       FontSize="17"
+                                       FontAttributes="Bold"
+                                       Grid.Row="0" Grid.Column="0" />
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       FontSize="14"
+                                       TextColor="#666666">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="&#x23F0; " />
+                                            <Span Text="{Binding AlarmTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <CheckBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                                          IsChecked="{Binding IsCompleted}"
+                                          CheckedChanged="OnCheckedChanged"
+                                          VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
