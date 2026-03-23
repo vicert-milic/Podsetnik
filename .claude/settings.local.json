@@ -14,7 +14,9 @@
       "Bash(start:*)",
       "Read(//c/ProgramData/Microsoft/VisualStudio/**)",
       "Bash(where.exe devenv.exe)",
-      "Bash(cmd.exe /c 'where devenv')"
+      "Bash(cmd.exe /c 'where devenv')",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
     ]
   }
 }
